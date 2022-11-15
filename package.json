@@ -1,0 +1,34 @@
+{
+  "name": "atilho-server",
+  "version": "0.0.1",
+  "description": "The backend side of Atilho.",
+  "author": "Rodrigo Saling",
+  "license": "MIT",
+  "homepage": "https://github.com/rodrigosaling/atilho-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rodrigosaling/atilho-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rodrigosaling/atilho-server/issues"
+  },
+  "type": "module",
+  "main": "./src/index.js",
+  "scripts": {
+    "dev:watch": "node ./src/index.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "atilho",
+    "nodejs",
+    "express"
+  ],
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "2.7.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
