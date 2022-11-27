@@ -2,8 +2,8 @@
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const FILENAME = fileURLToPath(import.meta.url);
+const DIRNAME = dirname(FILENAME);
 
 // Update with your config settings.
 
@@ -19,10 +19,10 @@ export default {
     useNullAsDefault: true, // https://stackoverflow.com/questions/41030694/how-does-knex-handle-default-values-in-sqlite
     migrations: {
       tableName: 'knex_migrations',
-      directory: `${__dirname}/db/migrations`,
+      directory: `${DIRNAME}/db/migrations`,
     },
     seeds: {
-      directory: `${__dirname}/db/seeds`,
+      directory: `${DIRNAME}/db/seeds`,
     },
   },
 
