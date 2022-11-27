@@ -5,10 +5,10 @@
  */
 export async function seed(knex) {
   // Deletes ALL existing entries
-  await knex('accounts').del();
-  await knex('accounts').insert([
-    { name: 'Itaú', amount: 18273.99 },
-    { name: 'Bradesco', amount: 232.77 },
-    { name: 'Banco do Brasil', amount: -236.1 },
+  await knex('account_types').del();
+  await knex('account_types').insert([
+    { id: 1, name: 'Checking' },
+    { id: 2, name: 'Credit Card' },
+    { id: 3, name: 'Investment' },
   ]);
 }

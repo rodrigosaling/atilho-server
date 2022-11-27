@@ -3,11 +3,10 @@
  * @returns { Promise<void> }
  */
 export function up(knex) {
-  return knex.schema.createTable('groups', (t) => {
+  return knex.schema.createTable('account_types', (t) => {
     t.increments('id').primary().unsigned();
-    t.string('name');
-    t.string('email').unique().index();
-    t.timestamp('created_at').defaultTo(knex.fn.now());
+    t.string('name').notNullable();
+    t.timestamp('create_at').defaultTo(knex.fn.now());
     t.timestamp('updated_at').defaultTo(knex.fn.now());
   });
 }
@@ -17,7 +16,5 @@ export function up(knex) {
  * @returns { Promise<void> }
  */
 export function down(knex) {
-  return knex.schema.dropTableIfExists('groups');
+  return knex.schema.dropTableIfExists('accounts');
 }
-
-// THIS IS FOR A FUTURE IMPLEMENTATION, MAYBE
