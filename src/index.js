@@ -1,6 +1,7 @@
 import express from 'express';
 import knex from 'knex';
 import cors from 'cors';
+// eslint-disable-next-line import/extensions
 import knexfile from '../knexfile.js';
 
 const env = process.env.NODE_ENV || 'development';
@@ -12,8 +13,14 @@ const port = 3456;
 
 app.use(cors());
 
+const TABLE_ACCOUNTS = 'accounts';
+
 app.get('/', (request, response) => {
-  response.send('Hello World!');
+  response.send({
+    id: '238j91832h9da8w3h423',
+    name: 'John Doe',
+    age: 232,
+  });
 });
 
 // app.get('/create', async (request, response) => {
@@ -36,18 +43,27 @@ app.get('/', (request, response) => {
 // });
 
 app.get('/accounts', async (_, response) => {
-  response.send(await sql.select().from('accounts'));
+  response.send(await sql.select().from(TABLE_ACCOUNTS));
 });
 
 app.get('/accounts/:id', async (request, response) => {
   response.send(
-    await sql.select('id').from('accounts').where('id', request.params.id)
+    await sql
+      .select('id', 'name', 'currency')
+      .from(TABLE_ACCOUNTS)
+      .where('id', request.params.id)
   );
 });
 
 app.post('/accounts', async (request, response) => {
   response.send(
-    await sql.select('id').from('accounts').where('id', request.params.id)
+    await sql.select('id').from(TABLE_ACCOUNTS).where('id', request.params.id)
+  );
+});
+
+app.put('/accounts', async (request, response) => {
+  response.send(
+    await sql.select('id').from(TABLE_ACCOUNTS).where('id', request.params.id)
   );
 });
 

@@ -3,13 +3,15 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "airbnb"],
+  "extends": ["eslint:recommended", "airbnb", "prettier"],
+  "plugins": ["prettier"],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "rules": {
+    "prettier/prettier": "error",
     // https://github.com/wantedly/frolint/issues/31#issuecomment-664020355
     "comma-dangle": [
       "error",
