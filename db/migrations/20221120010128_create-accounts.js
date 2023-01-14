@@ -5,15 +5,15 @@
 export function up(knex) {
   return knex.schema.createTable('accounts', (t) => {
     t.increments('id').primary().unsigned();
-    t.integer('account_type_id').unsigned();
-    t.foreign('account_type_id').references('id').inTable('account_types');
+    t.integer('accountTypeId').unsigned();
+    t.foreign('accountTypeId').references('id').inTable('accountTypes');
     t.string('name').notNullable();
     t.string('currency').notNullable();
-    t.decimal('initial_amount').defaultTo(0).notNullable();
-    t.decimal('current_amount').defaultTo(0).notNullable();
-    t.boolean('is_deleted').defaultTo(false);
-    t.timestamp('create_at').defaultTo(knex.fn.now());
-    t.timestamp('updated_at').defaultTo(knex.fn.now());
+    t.decimal('initialAmount').defaultTo(0).notNullable();
+    t.decimal('currentAmount').defaultTo(0).notNullable();
+    t.boolean('isDeleted').defaultTo(false);
+    t.timestamp('createAt').defaultTo(knex.fn.now());
+    t.timestamp('updatedAt').defaultTo(knex.fn.now());
   });
 }
 

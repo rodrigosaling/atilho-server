@@ -7,8 +7,8 @@ export function up(knex) {
     t.increments('id').primary().unsigned();
     t.string('email').unique().index();
     t.string('name').nullable();
-    t.timestamp('created_at').defaultTo(knex.fn.now());
-    t.timestamp('updated_at').defaultTo(knex.fn.now());
+    t.timestamp('createdAt').defaultTo(knex.fn.now());
+    t.timestamp('updatedAt').defaultTo(knex.fn.now());
   });
 }
 

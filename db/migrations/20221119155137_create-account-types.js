@@ -3,11 +3,11 @@
  * @returns { Promise<void> }
  */
 export function up(knex) {
-  return knex.schema.createTable('account_types', (t) => {
+  return knex.schema.createTable('accountTypes', (t) => {
     t.increments('id').primary().unsigned();
     t.string('name').notNullable();
-    t.timestamp('create_at').defaultTo(knex.fn.now());
-    t.timestamp('updated_at').defaultTo(knex.fn.now());
+    t.timestamp('createAt').defaultTo(knex.fn.now());
+    t.timestamp('updatedAt').defaultTo(knex.fn.now());
   });
 }
 
