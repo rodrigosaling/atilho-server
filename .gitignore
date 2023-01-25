@@ -1,3 +1,6 @@
+# Folders
+.idea
 node_modules
 
-.idea
+# Files
+db/dev.sqlite3

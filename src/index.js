@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import knex from 'knex';
-// import humps from 'humps';
 
 import knexfile from '../knexfile.js';
 
@@ -17,69 +16,97 @@ const port = 3456;
 app.use(bodyParser.json());
 
 app.use(cors());
-app.options('*', cors());
+// app.options('*', cors()); // Not needed
 
 const TABLE_ACCOUNTS = 'accounts';
 const TABLE_ACCOUNT_TYPES = 'accountTypes';
 
-app.get('/', (request, response) => {
-  response.send({
-    id: '238j91832h9da8w3h423',
-    name: 'John Doe',
-    age: 232,
-  });
-});
-
-// app.get('/create', async (request, response) => {
-//   await sql.schema.createTable('users', (table) => {
-//     table.increments();
-//     table.string('name');
-//     table.timestamps();
-//   });
-//   response.send('ok');
-// });
-
-// app.get('/insert', async (request, response) => {
-//   await sql('users').insert({ name: 'Michele' });
-//   response.send('ok');
-// });
-
-// app.get('/select', async (_, response) => {
-//   const result = await sql.select().from('users');
-//   response.send(result);
-// });
-
 app.get('/accounts', async (_, response) => {
-  const result = await sql.select().from(TABLE_ACCOUNTS);
-  response.send(result);
+  try {
+    response.send(
+      await sql.select().from(TABLE_ACCOUNTS).where('isDeleted', false)
+    );
+  } catch (error) {
+    response.status(500).json(error);
+  }
 });
 
 app.get('/accounts/:id', async (request, response) => {
   response.send(
     await sql
-      .select('id', 'name', 'currency')
+      .select(/* 'id', 'name', 'currency' */)
       .from(TABLE_ACCOUNTS)
       .where('id', request.params.id)
   );
 });
 
 app.post('/accounts', async (request, response) => {
-  const { name, initialAmount, accountTypeId } = request.body;
+  const { name, amount, accountTypeId } = request.body;
+  const transaction = await sql(TABLE_ACCOUNTS).insert({
+    accountTypeId,
+    name,
+    currency: 'R$',
+    initialAmount: amount,
+    currentAmount: amount,
+  });
+
+  response.status(201).json(transaction);
+});
+
+app.put('/accounts/:id', async (request, response) => {
+  const { name, amount, accountTypeId, currency } = request.body;
+  // TODO: if the currentAmount is different from the current amount,
+  // create a new transaction based on the type of the account
+  try {
+    const transaction = await sql(TABLE_ACCOUNTS)
+      .where('id', request.params.id)
+      .update({
+        accountTypeId,
+        name,
+        currency,
+        currentAmount: amount,
+      });
+    response.sendStatus(200);
+  } catch (error) {
+    response.status(500).json(error);
+  }
+});
+// Not a real delete, just a logical delete
+app.put('/accounts/:id/delete', async (request, response) => {
+  const { name, updatedAmount } = request.body;
   response.send(
-    await sql(TABLE_ACCOUNTS).insert({
-      accountTypeId,
-      name,
-      currency: 'R$',
-      initialAmount,
-      currentAmount: initialAmount,
-    })
+    await sql
+      .from(TABLE_ACCOUNTS)
+      .where('id', request.params.id)
+      .update({ isDeleted: true })
   );
 });
 
-app.put('/accounts', async (request, response) => {
-  response.send(
-    await sql.select('id').from(TABLE_ACCOUNTS).where('id', request.params.id)
+app.patch('/accounts/:id', async (request, response) => {
+  const { body } = request;
+
+  const validColumns = [
+    'email',
+    'currency',
+    'currentAmount',
+    'color',
+    'accountTypeId',
+  ];
+
+  const propsToUpdate = Object.fromEntries(
+    validColumns
+      .filter((column) => body[column])
+      .map((column) => [column, body[column]])
   );
+
+  try {
+    const transaction = await sql(TABLE_ACCOUNTS)
+      .where('id', request.params.id)
+      .update(propsToUpdate);
+    response.sendStatus(200);
+  } catch (error) {
+    response.status(500).json(error);
+  }
 });
 
 app.get('/account-types', async (_, response) => {

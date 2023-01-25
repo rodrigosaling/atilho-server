@@ -1,3 +1,12 @@
 {
-  "cSpell.words": ["knexfile"]
+  "cSpell.words": ["knexfile"],
+  "workbench.colorCustomizations": {
+    "commandCenter.border": "#15202b99",
+    "titleBar.activeBackground": "#87d2a1",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#87d2a199",
+    "titleBar.inactiveForeground": "#15202b99",
+    "sash.hoverBorder": "#ace0be"
+  },
+  "peacock.color": "#87d2a1"
 }
