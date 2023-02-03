@@ -1,3 +1,5 @@
+export const TABLE_ACCOUNT_TYPES = 'accountTypes';
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -16,5 +18,5 @@ export function up(knex) {
  * @returns { Promise<void> }
  */
 export function down(knex) {
-  return knex.schema.dropTableIfExists('account_types');
+  return knex.schema.dropTableIfExists('accountTypes');
 }

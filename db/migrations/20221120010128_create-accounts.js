@@ -1,9 +1,10 @@
+export const TABLE_ACCOUNTS = 'accounts';
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
 export function up(knex) {
-  return knex.schema.createTable('accounts', (t) => {
+  return knex.schema.createTable(TABLE_ACCOUNTS, (t) => {
     t.increments('id').primary().unsigned();
     // TODO: add the slug/id/ based on nanoid so we don't use the regular ID
     t.integer('accountTypeId').unsigned();
@@ -24,5 +25,5 @@ export function up(knex) {
  * @returns { Promise<void> }
  */
 export function down(knex) {
-  return knex.schema.dropTableIfExists('accounts');
+  return knex.schema.dropTableIfExists(TABLE_ACCOUNTS);
 }
